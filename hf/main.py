@@ -47,7 +47,7 @@ async def analyze_image_with_qwen(image_bytes: bytes) -> str:
 
         # Extract the response content
         if hasattr(result, "choices") and len(result.choices) > 0:
-            return result.choices[0].message.content
+            return str(result.choices[0].message.content)
         else:
             return str(result)
 
@@ -65,7 +65,7 @@ async def analyze_image_with_blip(image_bytes: bytes) -> str:
         result = await client.image_to_text(
             image=image_bytes, model="Salesforce/blip-image-captioning-base"
         )
-        return result
+        return str(result.generated_text)
     except Exception as e:
         return f"Error analyzing image: {str(e)}"
 

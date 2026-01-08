@@ -3,9 +3,8 @@ import base64
 import io
 import os
 
-import requests
 from dotenv import load_dotenv
-from huggingface_hub import AsyncInferenceClient, InferenceClient
+from huggingface_hub import AsyncInferenceClient
 from livekit import agents, rtc
 from livekit.agents import (
     Agent,
@@ -14,17 +13,12 @@ from livekit.agents import (
     get_job_context,
     room_io,
 )
-from livekit.agents.llm import ChatContext, ChatMessage, ImageContent
+from livekit.agents.llm import ChatContext, ChatMessage
 from livekit.plugins import google, noise_cancellation, silero
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 from PIL import Image
 
 load_dotenv(".env.local")
-
-HF_API_URL = (
-    "https://router.huggingface.co/models/Salesforce/blip-image-captioning-large"
-)
-HF_HEADERS = {"Authorization": f"Bearer {os.environ['HUGGINGFACE_API_KEY']}"}
 
 
 async def analyze_image_with_blip(image_bytes: bytes) -> str:
